@@ -55,7 +55,7 @@ const recommend = ref({
 })
 
 async function calculate() {
-    axios.get('http://81.68.212.127:8080/' + functionName.value + '/suitable?period=' + period.value)
+    axios.get('http://luke.host:8080/' + functionName.value + '/suitable?period=' + period.value)
     .then(response => {
           result.value = response.data.interest * money.value * period.value / 100.0;
           recommend.value = response.data;

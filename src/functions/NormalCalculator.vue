@@ -157,7 +157,7 @@
         this.isStarted = false
       },
       getLastAnswer() {
-        axios.get('http://81.68.212.127:8080/calculate?id='+this.lastAnswerId)
+        axios.get('http://luke.host:8080/calculate?id='+this.lastAnswerId)
         .then(response => {
           this.append(response.data.result);
         })
@@ -170,7 +170,7 @@
 
         formData.append('expression', expression);
         formData.append('result', result);
-        axios.post('http://81.68.212.127:8080/calculate', formData)
+        axios.post('http://luke.host:8080/calculate', formData)
         .then(response => {
           this.lastAnswerId = response.data.id;
         })

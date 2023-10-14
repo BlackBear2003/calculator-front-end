@@ -53,7 +53,7 @@ export default{
   methods: {
     async refershTableData() {
       try {
-        const response = await axios.get('http://81.68.212.127:8080/deposit');
+        const response = await axios.get('http://luke.host:8080/deposit');
         this.tableData = response.data;
         console.log(this.tableData);
         return response.data;
@@ -70,7 +70,7 @@ export default{
         const confirmDelete = window.confirm("确认删除这行记录吗？");
         if (confirmDelete) {
           
-          await axios.delete('http://81.68.212.127:8080/deposit?id='+row.id);
+          await axios.delete('http://luke.host:8080/deposit?id='+row.id);
           this.editingId = null;
           this.refershTableData();
         }
@@ -86,9 +86,9 @@ export default{
           formData.append("periodDescription", row.periodDescription);
           formData.append("period", row.period);
           formData.append("interest", row.interest);
-          await axios.post('http://81.68.212.127:8080/deposit', formData);
+          await axios.post('http://luke.host:8080/deposit', formData);
         } else {
-          await axios.put('http://81.68.212.127:8080/deposit', row);
+          await axios.put('http://luke.host:8080/deposit', row);
         }
         this.editingId = null;
         this.refershTableData();
