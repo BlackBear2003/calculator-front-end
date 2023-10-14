@@ -35,12 +35,11 @@
           </el-sub-menu>
         </el-menu>
         </el-aside>
-        <el-main style="margin: 5%;">
+        <el-main style="padding-left: 3%;">
           <el-row>
             <NormalCalculator v-if="ctrls.normalCal"></NormalCalculator>
           </el-row>
           <el-row v-if="ctrls.interestTable">
-            <el-col :span="1"></el-col>
             <el-col :span="10">
               <el-row>
                 <h1>存款利率表</h1>
@@ -49,7 +48,7 @@
                 <DepositEditableTable></DepositEditableTable>
               </el-row>
             </el-col>
-            <el-col :span="2"></el-col>
+            <el-col :span="1"></el-col>
             <el-col :span="10">
               <el-row>
                 <h1>贷款利率表</h1>
@@ -59,7 +58,6 @@
               </el-row>
               
             </el-col>
-            <el-col :span="1"></el-col>
           </el-row>
           <el-row>
             <InterestCalculator style="width: 350px;" v-if="ctrls.interestCal"></InterestCalculator>

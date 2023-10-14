@@ -1,4 +1,7 @@
 <template>
+  <el-space  :size="100" :spacer="spacer">
+
+
     <div class="calculator">
       <div class="result" style="grid-area: result">
         {{ equation }}
@@ -25,7 +28,16 @@
       <button style="grid-area: dot" @click="append('.')">.</button>
       
     </div>
+    
+    <el-table
+        :data="last10Ans"
+      >
+        <el-table-column prop="expression" label="表达式" width="250" />
+        <el-table-column prop="result" label="运算结果" width="100" />
+    </el-table>
+  </el-space>
   </template>
+ 
   
   <style scoped>
   
@@ -85,6 +97,8 @@
   
   <script>
     import axios from 'axios';
+    import { ElDivider } from 'element-plus';
+    import { h, ref } from 'vue';
 
   export default{
     data(){
@@ -93,7 +107,9 @@
         isDecimalAdded: false,
         isOperatorAdded: false,
         isStarted: false,
-        lastAnswerId: 0
+        lastAnswerId: 0,
+        last10Ans: [],
+        spacer: h(ElDivider, { direction: 'vertical' })
       } 
     },
     methods: {
@@ -157,9 +173,17 @@
         this.isStarted = false
       },
       getLastAnswer() {
-        axios.get('http://luke.host:8080/calculate?id='+this.lastAnswerId)
+        console.log(this.last10Ans)
+        if (this.last10Ans.length > 0) {
+          this.append(this.last10Ans[0].result);
+        } else {
+          this.append(''); 
+        }
+      },
+      getLast10() {
+        axios.get('http://luke.host:8080/calculate/last10')
         .then(response => {
-          this.append(response.data.result);
+          this.last10Ans = response.data;
         })
         .catch(error => {
           console.error('请求出错', error);
@@ -173,11 +197,17 @@
         axios.post('http://luke.host:8080/calculate', formData)
         .then(response => {
           this.lastAnswerId = response.data.id;
+          this.getLast10();
         })
         .catch(error => {
           console.error('请求出错', error);
         });
       }
+    },
+    mounted: function () {
+      this.$nextTick(function () {
+        this.getLast10();
+      })
     }
   }
   </script>
